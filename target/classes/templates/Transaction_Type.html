@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Home_Screen</title>
+</head>
+<body>
+<!--[[${#httpServletRequest.remoteUser}]]-->
+
+<form  method="post" th:action="@{/transaction/home}"  id="form2" >
+
+    <input type="radio" id="withdraw" name="type" value="withdraw">
+
+    <label for="withdraw">Withdraw</label><br>
+
+    <input type="radio" id="deposit" name="type" value="Deposit">
+
+    <label for="deposit">Deposit</label><br>
+
+    <br>
+
+    <label for="amount">Enter the Amount:</label><br>
+
+    <input type="text" id="amount" name="amount"><br>
+
+    <label for="comment">Comment:</label><br>
+
+    <input type="text" id="comment" name="comment" ><br><br>
+</form>
+<button type="submit" form="form2" value="Ok">Ok</button>
+
+
+<br><br>
+
+<form method="get" th:action="@{/transaction/history}">
+    <button>History</button>
+</form>
+
+<br><br>
+
+</body>
+</html>

@@ -14,6 +14,11 @@ public class Transaction_History {
     private double amount;
     private Date time_stamp;
     private String comment;
+    private String txnType;
+
+    public void setTxnType(String txnType) {
+        this.txnType = txnType;
+    }
 
     public int getTxn_id() {
         return txn_id;
@@ -55,15 +60,9 @@ public class Transaction_History {
         this.comment = comment;
     }
 
-    public String getTxn_type() {
-        return txn_type;
+    public String getTxnType() {
+        return txnType;
     }
-
-    public void setTxn_type(String txn_type) {
-        this.txn_type = txn_type;
-    }
-
-    private String txn_type;
 
     public Transaction_History(){}
 
@@ -71,7 +70,7 @@ public class Transaction_History {
         this.username=username;
         this.amount=amount;
         this.time_stamp=time_stamp;
-        this.txn_type=txn_type;
+        this.txnType=txn_type;
         this.comment=comment;
     }
 
@@ -83,7 +82,7 @@ public class Transaction_History {
                 ", amount=" + amount +
                 ", time_stamp=" + time_stamp +
                 ", comment='" + comment + '\'' +
-                ", txn_type='" + txn_type + '\'' +
+                ", txn_type='" + txnType + '\'' +
                 '}';
     }
 }

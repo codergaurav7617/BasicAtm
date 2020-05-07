@@ -9,4 +9,7 @@ import java.util.List;
 @Repository
 public interface TransactionRepository extends JpaRepository<Transaction_History,Integer> {
             List<Transaction_History> findByUsername(String username);
+            List<Transaction_History> findByUsernameAndTxnTypeIsNotContaining(String username,String  str);
+            List<Transaction_History> findByUsernameAndTxnTypeIsContaining(String username,String  str);
+
 }

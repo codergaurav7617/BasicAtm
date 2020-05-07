@@ -11,7 +11,7 @@ import org.springframework.web.servlet.ModelAndView;
 import javax.servlet.http.HttpServletRequest;
 import java.util.Date;
 import java.util.List;
-
+import static com.ril.jpm.test.security.Constant.VIEW;
 @RestController
 @RequestMapping("/transaction")
 public class TransactionController {
@@ -19,30 +19,42 @@ public class TransactionController {
     @Autowired
     private TransactionService transactionService;
 
-    @RequestMapping("/home")
+    @RequestMapping("/type")
     public ModelAndView home(
             HttpServletRequest httpServletRequest,
-            @RequestParam String type,
-            @RequestParam String amount,
-            @RequestParam String comment
-
+            Transaction_History th
     ) throws NotHavingSufficentBalance {
-
-        double balance=Double.parseDouble(amount);
+        System.out.println(th);
+        double balance=th.getAmount();
 
         // to find out the current user
         String logged_in_user=httpServletRequest.getRemoteUser();
 
         // get the account of current user
-        transactionService.setBalanceOfUser(logged_in_user, type, balance);
+        transactionService.setBalanceOfUser(logged_in_user, th.getTxnType(), balance);
 
         // add the transaction record .
-        transactionService.create_txn(logged_in_user, balance, new Date(),comment,type);
+        transactionService.create_txn(logged_in_user, balance, new Date(),th.getComment(),th.getTxnType());
+
 
         // holder for model and view
         ModelAndView mv=new ModelAndView();
-        mv.setViewName("sucess");
-        return mv;
+
+        if (th.getTxnType().equals(VIEW)){
+            // get the total balance in the logged in user account
+            double amount=transactionService.getBalance(logged_in_user);
+            //get all the view transaction
+            List<Transaction_History> list_of_txn=transactionService.getAllTheViewTransaction(logged_in_user);
+
+            mv.setViewName("balance");
+            mv.addObject("val",amount);
+            mv.addObject("data",list_of_txn);
+            return mv;
+        }else{
+            mv.setViewName("sucess");
+            return mv;
+        }
+
     }
 
     @RequestMapping("/history")
@@ -52,6 +64,18 @@ public class TransactionController {
         String logged_in_user=httpServletRequest.getRemoteUser();
 
         // get all the transaction of the particular user
+        List<Transaction_History> list_of_txn=transactionService.getHistory(logged_in_user);
+
+        // holder for model and view
+        ModelAndView mv=new ModelAndView();
+        mv.setViewName("Transaction_History");
+        mv.addObject("data",list_of_txn);
+        return mv;
+    }
+
+    @RequestMapping("/showtransaction")
+    public ModelAndView showTransaction(HttpServletRequest httpServletRequest){
+        String logged_in_user=httpServletRequest.getRemoteUser();
         List<Transaction_History> list_of_txn=transactionService.getAllTheTransaction(logged_in_user);
 
         // holder for model and view

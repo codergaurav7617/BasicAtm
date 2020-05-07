@@ -1,11 +1,8 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org">
-
-<html lang="en">
-
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="https://www.thymeleaf.org"
+      xmlns:sec="https://www.thymeleaf.org/thymeleaf-extras-springsecurity3">
 <head>
-    <meta charset="UTF-8">
-    <title>History</title>
+    <title>Transaction Sucessful</title>
     <style>
         #historyTable {
             border: 2px solid #CCCCCC;
@@ -47,8 +44,12 @@
 </head>
 
 <body>
+<span th:inline="text">Hello [[${#httpServletRequest.remoteUser}]] Your account balance is  </span>
+<span th:text="${val}"></span>
+<br><br>
 
-<h2>All the previous transaction of the user:</h2>
+
+<h2>All the previous view balance of the user:</h2>
 
 <br/><br/>
 <div>
@@ -73,6 +74,7 @@
     </table>
 </div>
 <br><br>
+
 <form th:action="@{/logout}" method="post">
     <input type="submit" value="Sign Out"/>
 </form>
@@ -80,6 +82,6 @@
 <form th:action="@{/}" method="get">
     <input type="submit" value="Home"/>
 </form>
-</body>
 
+</body>
 </html>

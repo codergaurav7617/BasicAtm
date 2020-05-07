@@ -63,7 +63,7 @@
         </tr>
         <tr th:each ="Transaction_History : ${data}">
             <td th:text="${Transaction_History.txn_id}">...</td>
-            <td th:text="${Transaction_History.txn_type}">...</td>
+            <td th:text="${Transaction_History.txnType}">...</td>
             <td th:text="${Transaction_History.amount}">...</td>
             <td th:text="${Transaction_History.username}">...</td>
             <td th:text="${Transaction_History.comment}">...</td>
@@ -72,6 +72,7 @@
         </tr>
     </table>
 </div>
+<br><br>
 <form th:action="@{/logout}" method="post">
     <input type="submit" value="Sign Out"/>
 </form>
